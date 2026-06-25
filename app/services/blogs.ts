@@ -28,6 +28,19 @@ const blogs = [
   },
 ];
 
+interface newBlog {
+  title: string;
+  author: string;
+  url: string;
+  likes: number;
+}
+
 export const getBlogs = () => {
   return blogs;
+};
+
+export const addNewBlog = (newBlog: newBlog) => {
+  const newBlogWithId = { id: blogs.length + 1, ...newBlog };
+  console.log(newBlogWithId);
+  blogs.push(newBlogWithId);
 };

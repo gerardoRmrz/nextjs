@@ -1,8 +1,10 @@
+import { createBlog } from "../../actions/blogs";
+
 const NewBlog = () => {
   return (
     <div>
       <h2>Create a new blog</h2>
-      <form>
+      <form action={createBlog}>
         <div>
           <label>Title</label>
           <input type="text" name="title" required></input>
