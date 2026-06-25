@@ -1,17 +1,4 @@
-interface Blog {
-  id: number;
-  title: string;
-  author: string;
-  url?: string;
-  likes: number;
-}
-
-interface newBlog {
-  title: string;
-  author: string;
-  url?: string;
-  likes: number;
-}
+import { Blog, newBlog } from "../types/types";
 
 const blogs: Blog[] = [
   {
