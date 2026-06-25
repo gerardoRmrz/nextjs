@@ -1,4 +1,19 @@
-const blogs = [
+interface Blog {
+  id: number;
+  title: string;
+  author: string;
+  url?: string;
+  likes: number;
+}
+
+interface newBlog {
+  title: string;
+  author: string;
+  url?: string;
+  likes: number;
+}
+
+const blogs: Blog[] = [
   {
     id: 1,
     title: "Becoming a Hacker: Must Read Security & Cyber Crime Books",
@@ -28,13 +43,6 @@ const blogs = [
   },
 ];
 
-interface newBlog {
-  title: string;
-  author: string;
-  url: string;
-  likes: number;
-}
-
 export const getBlogs = () => {
   return blogs;
 };
@@ -48,4 +56,11 @@ export const addNewBlog = (newBlog: newBlog) => {
   const newBlogWithId = { id: blogs.length + 1, ...newBlog };
   console.log(newBlogWithId);
   blogs.push(newBlogWithId);
+};
+
+export const incrementLikes = (id: number) => {
+  const blogToUpdate = blogs.find((blog) => blog.id === id);
+  if (blogToUpdate) {
+    blogToUpdate.likes = blogToUpdate.likes + 1;
+  }
 };
