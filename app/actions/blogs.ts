@@ -27,6 +27,14 @@ export const createBlog = async (formData: FormData) => {
 export const incrementBlogLikes = async (formData: FormData) => {
   const id = formData.get("id") as string;
   incrementLikes(Number(id));
-  revalidatePath(`/notes/${id}`);
-  revalidatePath(`/notes`);
+  revalidatePath(`/blogs/${id}`);
+  revalidatePath(`/blogs`);
+};
+
+export const searchResult = async (formData: FormData) => {
+  const searchTerm = formData.get("searchTerm") as string;
+  if (searchTerm === "") {
+    redirect("/blogs");
+  }
+  redirect(`/blogs?filter=${searchTerm}`);
 };

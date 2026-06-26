@@ -30,7 +30,10 @@ const blogs: Blog[] = [
   },
 ];
 
-export const getBlogs = () => {
+export const getBlogs = (searchTerm: string | null) => {
+  if (searchTerm) {
+    return blogs.filter((blog) => blog.title.includes(searchTerm));
+  }
   return blogs;
 };
 
@@ -51,3 +54,5 @@ export const incrementLikes = (id: number) => {
     blogToUpdate.likes = blogToUpdate.likes + 1;
   }
 };
+
+export const handleChange = () => {};
