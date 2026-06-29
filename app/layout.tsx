@@ -1,5 +1,4 @@
 import Link from "next/link";
-// aiven service name pg-297e913
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -12,6 +11,8 @@ export default function RootLayout({
           <Link href="/">Home</Link>
           {" | "}
           <Link href="/blogs">blogs</Link>
+          {" | "}
+          <Link href="/users">users</Link>
           {" | "}
           <Link href="/blogs/new">create new</Link>
         </nav>

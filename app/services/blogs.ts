@@ -56,6 +56,7 @@ export const addNewBlog = async (newBlog: newBlogInfer) => {
     title: newBlog.title,
     author: newBlog.author,
     url: newBlog.url,
+    userId: newBlog.userId,
   });
 };
 

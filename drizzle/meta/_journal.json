@@ -8,6 +8,20 @@
       "when": 1782503949772,
       "tag": "0000_pale_hairball",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1782772200458,
+      "tag": "0001_tiny_toad",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1782772807946,
+      "tag": "0002_whole_joseph",
+      "breakpoints": true
     }
   ]
 }
