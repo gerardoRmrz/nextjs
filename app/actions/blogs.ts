@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { addNewBlog, incrementLikes } from "../services/blogs";
 import { revalidatePath } from "next/cache";
+import { blogsDB } from "@/db/schema";
 
 export const createBlog = async (formData: FormData) => {
   const title = formData.get("title") as string;
@@ -18,7 +19,9 @@ export const createBlog = async (formData: FormData) => {
 
   //console.log("********>", newBlog);
 
-  addNewBlog(newBlog);
+  type newBlogInfer = typeof blogsDB.$inferInsert;
+
+  addNewBlog(newBlog as newBlogInfer);
 
   revalidatePath("/blogs");
   redirect("/blogs");
