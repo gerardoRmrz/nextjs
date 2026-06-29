@@ -1,6 +1,10 @@
+import { eq, sql } from "drizzle-orm";
+import { db } from "@/db";
+import { blogsDB } from "@/db/schema";
+
 import { Blog, newBlog } from "../types/types";
 
-const blogs: Blog[] = [
+/* const blogs: Blog[] = [
   {
     id: 1,
     title: "Becoming a Hacker: Must Read Security & Cyber Crime Books",
@@ -29,30 +33,37 @@ const blogs: Blog[] = [
     likes: 3,
   },
 ];
+ */
 
-export const getBlogs = (searchTerm: string | null) => {
-  if (searchTerm) {
-    return blogs.filter((blog) => blog.title.includes(searchTerm));
-  }
-  return blogs;
+export const getBlogs = async (searchTerm: string | null) => {
+  const allBlogs = await db.query.blogsDB.findMany();
+  /* if (searchTerm) {
+    return allBlogs.filter((blog) => blog.title.includes(searchTerm));
+  } */
+  return allBlogs;
 };
 
-export const getBlogsById = (id: string) => {
-  const filteredBlog = blogs.find((blog) => blog.id === Number(id));
-  return filteredBlog;
+export const getBlogsById = async (id: number) => {
+  return await db.query.blogsDB.findFirst({
+    where: eq(blogsDB.id, id),
+  });
 };
 
-export const addNewBlog = (newBlog: newBlog) => {
-  const newBlogWithId = { id: blogs.length + 1, ...newBlog };
-  console.log(newBlogWithId);
-  blogs.push(newBlogWithId);
+type newBlogInfer = typeof blogsDB.$inferInsert;
+
+export const addNewBlog = async (newBlog: newBlogInfer) => {
+  await db.insert(blogsDB).values({
+    title: newBlog.title,
+    author: newBlog.author,
+    url: newBlog.url,
+  });
 };
 
-export const incrementLikes = (id: number) => {
-  const blogToUpdate = blogs.find((blog) => blog.id === id);
-  if (blogToUpdate) {
-    blogToUpdate.likes = blogToUpdate.likes + 1;
-  }
+export const incrementLikes = async (id: number) => {
+  await db
+    .update(blogsDB)
+    .set({ likes: sql`${blogsDB.likes} + 1` })
+    .where(eq(blogsDB.id, id));
 };
 
 export const handleChange = () => {};

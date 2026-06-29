@@ -4,7 +4,7 @@ import { incrementBlogLikes } from "@/app/actions/blogs";
 
 const BlogById = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
-  const blog = getBlogsById(id);
+  const blog = await getBlogsById(Number(id));
 
   if (!blog) {
     notFound();

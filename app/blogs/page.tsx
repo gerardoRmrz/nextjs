@@ -10,21 +10,19 @@ const Blogs = async ({
 }) => {
   const { filter } = await searchParams;
 
-  const blogs = getBlogs(filter);
+  const blogs = await getBlogs(filter);
 
   return (
     <div>
       <h2>blogs</h2>
       <Search />
       <ul>
-        {blogs
-          .toSorted((a: Blog, b: Blog) => b.likes - a.likes)
-          .map((blog) => (
-            <li key={blog.id}>
-              <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
-              <p>Likes: {blog.likes}</p>
-            </li>
-          ))}
+        {blogs.map((blog) => (
+          <li key={blog.id}>
+            <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
+            <p>Likes: {blog.likes}</p>
+          </li>
+        ))}
       </ul>
     </div>
   );

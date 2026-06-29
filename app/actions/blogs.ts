@@ -16,7 +16,7 @@ export const createBlog = async (formData: FormData) => {
     likes: 0,
   };
 
-  console.log("********>", newBlog);
+  //console.log("********>", newBlog);
 
   addNewBlog(newBlog);
 
