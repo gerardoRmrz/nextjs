@@ -1,6 +1,7 @@
 import { pgTable, serial, text, integer } from "drizzle-orm/pg-core";
+import { relations } from "drizzle-orm";
 
-export const blogsDB = pgTable("blogs", {
+export const blogs = pgTable("blogs", {
   id: serial("id").primaryKey(),
   title: text("title").notNull(),
   author: text("author").notNull(),
@@ -16,3 +17,14 @@ export const users = pgTable("users", {
   username: text("username").notNull().unique(),
   name: text("name").notNull(),
 });
+
+export const usersRelations = relations(users, ({ many }) => ({
+  blogs: many(blogs),
+}));
+
+export const blogsRelations = relations(blogs, ({ one }) => ({
+  user: one(users, {
+    fields: [blogs.userId],
+    references: [users.id],
+  }),
+}));

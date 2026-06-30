@@ -1,6 +1,6 @@
 import { eq, sql } from "drizzle-orm";
 import { db } from "@/db";
-import { blogsDB } from "@/db/schema";
+import { blogs } from "@/db/schema";
 
 import { Blog, newBlog } from "../types/types";
 
@@ -36,7 +36,7 @@ import { Blog, newBlog } from "../types/types";
  */
 
 export const getBlogs = async (searchTerm: string | null) => {
-  const allBlogs = await db.query.blogsDB.findMany();
+  const allBlogs = await db.query.blogs.findMany();
   /* if (searchTerm) {
     return allBlogs.filter((blog) => blog.title.includes(searchTerm));
   } */
@@ -44,15 +44,15 @@ export const getBlogs = async (searchTerm: string | null) => {
 };
 
 export const getBlogsById = async (id: number) => {
-  return await db.query.blogsDB.findFirst({
-    where: eq(blogsDB.id, id),
+  return await db.query.blogs.findFirst({
+    where: eq(blogs.id, id),
   });
 };
 
-type newBlogInfer = typeof blogsDB.$inferInsert;
+type newBlogInfer = typeof blogs.$inferInsert;
 
 export const addNewBlog = async (newBlog: newBlogInfer) => {
-  await db.insert(blogsDB).values({
+  await db.insert(blogs).values({
     title: newBlog.title,
     author: newBlog.author,
     url: newBlog.url,
@@ -62,9 +62,9 @@ export const addNewBlog = async (newBlog: newBlogInfer) => {
 
 export const incrementLikes = async (id: number) => {
   await db
-    .update(blogsDB)
-    .set({ likes: sql`${blogsDB.likes} + 1` })
-    .where(eq(blogsDB.id, id));
+    .update(blogs)
+    .set({ likes: sql`${blogs.likes} + 1` })
+    .where(eq(blogs.id, id));
 };
 
 export const handleChange = () => {};

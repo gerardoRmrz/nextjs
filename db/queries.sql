@@ -1,1 +1,1 @@
-SELECT id, title, author, likes FROM blogs;
+SELECT * from users LEFT JOIN blogs using(id);
