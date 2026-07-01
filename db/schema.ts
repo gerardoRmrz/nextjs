@@ -7,7 +7,7 @@ export const blogs = pgTable("blogs", {
   author: text("author").notNull(),
   url: text("url").notNull(),
   likes: integer("likes").notNull().default(0),
-  userId: integer("user_id")
+  user_Id: integer("user_id")
     .notNull()
     .references(() => users.id),
 });
@@ -25,7 +25,7 @@ export const usersRelations = relations(users, ({ many }) => ({
 
 export const blogsRelations = relations(blogs, ({ one }) => ({
   user: one(users, {
-    fields: [blogs.userId],
+    fields: [blogs.user_Id],
     references: [users.id],
   }),
 }));

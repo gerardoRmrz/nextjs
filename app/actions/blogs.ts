@@ -25,9 +25,10 @@ export const createBlog = async (formData: FormData) => {
 
   type newBlogInfer = typeof blogs.$inferInsert;
 
-  addNewBlog(newBlog as newBlogInfer);
+  await addNewBlog(newBlog as newBlogInfer);
 
   revalidatePath("/blogs");
+
   redirect("/blogs");
 };
 

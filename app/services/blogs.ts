@@ -22,6 +22,7 @@ type newBlogInfer = typeof blogs.$inferInsert;
 
 export const addNewBlog = async (newBlog: newBlogInfer) => {
   const user = await getCurrentUser();
+
   if (!user) {
     throw new Error("Not logged in");
   }
@@ -30,7 +31,7 @@ export const addNewBlog = async (newBlog: newBlogInfer) => {
     title: newBlog.title,
     author: newBlog.author,
     url: newBlog.url,
-    userId: newBlog.userId,
+    user_Id: user.id,
   });
 };
 
