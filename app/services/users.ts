@@ -7,7 +7,6 @@ export const getUsers = async () => {
 };
 
 export const getByUserName = async (userName: string) => {
-  console.log("query====>", userName);
   return await db.query.users.findFirst({
     where: like(users.username, userName),
     with: { blogs: true },

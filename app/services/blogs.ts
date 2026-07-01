@@ -2,38 +2,7 @@ import { eq, sql } from "drizzle-orm";
 import { db } from "@/db";
 import { blogs } from "@/db/schema";
 
-import { Blog, newBlog } from "../types/types";
-
-/* const blogs: Blog[] = [
-  {
-    id: 1,
-    title: "Becoming a Hacker: Must Read Security & Cyber Crime Books",
-    author: "Matt Fay",
-    url: "https://javascripttoday.com/blog/becoming-a-hacker-book-list",
-    likes: 0,
-  },
-  {
-    id: 2,
-    title: "The Best JavaScript Blogs for Developers in 2025",
-    author: "Matthew Warholak",
-    url: "https://draft.dev/learn/javascript-blogs",
-    likes: 2,
-  },
-  {
-    id: 3,
-    title: "Storing Metadata On Select Option Elements",
-    author: "Ben Nadel",
-    url: "https://www.bennadel.com/blog/4860-storing-metadata-on-select-option-elements.htm",
-    likes: 4,
-  },
-  {
-    id: 4,
-    title: "Image formats: Codecs and compression tools",
-    author: "Polina Gurtovaia",
-    likes: 3,
-  },
-];
- */
+import { getCurrentUser } from "./session";
 
 export const getBlogs = async (searchTerm: string | null) => {
   const allBlogs = await db.query.blogs.findMany();
@@ -52,6 +21,11 @@ export const getBlogsById = async (id: number) => {
 type newBlogInfer = typeof blogs.$inferInsert;
 
 export const addNewBlog = async (newBlog: newBlogInfer) => {
+  const user = await getCurrentUser();
+  if (!user) {
+    throw new Error("Not logged in");
+  }
+
   await db.insert(blogs).values({
     title: newBlog.title,
     author: newBlog.author,
