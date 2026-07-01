@@ -7,7 +7,10 @@ import { revalidatePath } from "next/cache";
 import { blogs } from "@/db/schema";
 
 export const createBlog = async (
-  pervState: { error: string },
+  prevState: {
+    errors: {};
+    values: { title: string; author: string; url: string };
+  },
   formData: FormData,
 ) => {
   const session = await auth();
@@ -16,18 +19,25 @@ export const createBlog = async (
   }
 
   const title = formData.get("title") as string;
-  if (!title || title.length < 5) {
-    return { error: "Title must be at least 5 characters long" };
-  }
-
   const author = formData.get("author") as string;
+  const url = formData.get("url") as string;
+
+  const errors = {};
+
   if (!author || author.length < 5) {
-    return { error: "Author must be at least 5 characters long" };
+    (errors as any).author = "Author must be at least 5 characters long";
   }
 
-  const url = formData.get("url") as string;
+  if (!title || title.length < 5) {
+    (errors as any).title = "Title must be at least 5 characters long";
+  }
+
   if (!url || url.length < 5) {
-    return { error: "URL must be at least 5 characters long" };
+    (errors as any).url = "URL must be at least 5 characters long";
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return { errors: { ...errors }, values: { title, author, url } };
   }
 
   const newBlog = {
