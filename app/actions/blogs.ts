@@ -6,15 +6,29 @@ import { addNewBlog, incrementLikes } from "../services/blogs";
 import { revalidatePath } from "next/cache";
 import { blogs } from "@/db/schema";
 
-export const createBlog = async (formData: FormData) => {
+export const createBlog = async (
+  pervState: { error: string },
+  formData: FormData,
+) => {
   const session = await auth();
   if (!session) {
     redirect("/login");
   }
 
   const title = formData.get("title") as string;
+  if (!title || title.length < 5) {
+    return { error: "Title must be at least 5 characters long" };
+  }
+
   const author = formData.get("author") as string;
+  if (!author || author.length < 5) {
+    return { error: "Author must be at least 5 characters long" };
+  }
+
   const url = formData.get("url") as string;
+  if (!url || url.length < 5) {
+    return { error: "URL must be at least 5 characters long" };
+  }
 
   const newBlog = {
     title,
