@@ -39,6 +39,11 @@ const generateUsersList = async () => {
       name: "Lucas Lucatero",
       passwordHash: await setPassword("abcd.2367"),
     },
+    {
+      username: "juanRulfo",
+      name: "Juan Rulfo",
+      passwordHash: await setPassword("LlanoLlamas.1953"),
+    },
   ];
 };
 

@@ -2,6 +2,8 @@ import Link from "next/link";
 import Search from "../ui/search";
 import { getBlogs } from "../services/blogs";
 
+import BlogItem from "../components/BlogItem";
+
 const Blogs = async ({
   searchParams,
 }: {
@@ -13,14 +15,11 @@ const Blogs = async ({
 
   return (
     <div>
-      <h2>blogs</h2>
+      <h2 className="text-4xl">blogs</h2>
       <Search />
       <ul>
         {blogs.map((blog) => (
-          <li key={blog.id}>
-            <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
-            <p>Likes: {blog.likes}</p>
-          </li>
+          <BlogItem blog={blog} key={blog.id} />
         ))}
       </ul>
     </div>

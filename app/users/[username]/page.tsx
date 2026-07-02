@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import BlogItem from "@/app/components/BlogItem";
 
 import { getByUserName } from "@/app/services/users";
 
@@ -14,12 +14,10 @@ const User = async ({ params }: { params: Promise<{ username: string }> }) => {
   console.log(user.blogs);
   return (
     <div>
-      <h2>{user.name}</h2>
+      <h2 className="text-4xl my-2">{user.name}</h2>
       <ul>
         {user.blogs?.map((blog) => (
-          <li key={blog.id}>
-            <Link href={`/blogs/${blog.id}`}>{blog.title}</Link>
-          </li>
+          <BlogItem blog={blog} key={blog.id}></BlogItem>
         ))}
       </ul>
     </div>

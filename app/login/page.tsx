@@ -27,23 +27,35 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="flex flex-col items-center my-20">
+      <h2 className="text-3xl">Login</h2>
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <div>
-          <label>
+          <label className="custom-label">
             Username
-            <input type="text" name="username" required />
+            <input
+              type="text"
+              name="username"
+              required
+              className="custom-input"
+            />
           </label>
         </div>
         <div>
-          <label>
+          <label className="custom-label">
             Password
-            <input type="password" name="password" required />
+            <input
+              type="password"
+              name="password"
+              required
+              className="custom-input"
+            />
           </label>
         </div>
-        <button type="submit">Login</button>
+        <button type="submit" className="custom-button text-2xl">
+          Login
+        </button>
       </form>
     </div>
   );

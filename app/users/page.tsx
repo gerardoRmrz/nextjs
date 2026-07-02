@@ -1,18 +1,16 @@
 import { getUsers } from "../services/users";
 
-import Link from "next/link";
+import UserItem from "../components/UserItem";
 
 const Users = async () => {
   const users = await getUsers();
 
   return (
     <div>
-      <h2>Users</h2>
+      <h1 className="text-4xl">Users</h1>
       <ul>
         {users.map((user) => (
-          <li key={user.id}>
-            <Link href={`/users/${user.username}`}>{user.name}</Link>
-          </li>
+          <UserItem user={user} key={user.id}></UserItem>
         ))}
       </ul>
     </div>

@@ -33,37 +33,42 @@ const NewBlog = () => {
 
   return (
     <div>
-      <h2>Create a new blog</h2>
-      <form action={formAction}>
+      <h2 className="text-2xl">Create a new blog</h2>
+      <form action={formAction} className="flex flex-col items-center my-3">
         <div>
-          <label>Title</label>
+          <label className="custom-label">Title</label>
           <input
             id="title"
             name="title"
             type="text"
             defaultValue={state.values?.title}
+            className="custom-input"
           ></input>
           {renderError("title", 0)}
         </div>
         <div>
-          <label>Author</label>
+          <label className="custom-label">Author</label>
           <input
             type="text"
             name="author"
             defaultValue={state.values?.author}
+            className="custom-input"
           ></input>
           {renderError("author", 1)}
         </div>
         <div>
-          <label>URL</label>
+          <label className="custom-label">URL</label>
           <input
             type="text"
             name="url"
             defaultValue={state.values?.url}
+            className="custom-input"
           ></input>
           {renderError("url", 2)}
         </div>
-        <button type="submit">Create</button>
+        <button type="submit" className="custom-button">
+          Create
+        </button>
       </form>
     </div>
   );

@@ -26,46 +26,51 @@ export default function RegisterPage() {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <form action={formAction}>
+    <div className="flex flex-col items-center my-20">
+      <h2 className="text-3xl">Register</h2>
+      <form action={formAction} className="flex flex-col items-center">
         <div>
-          <label>
+          <label className="custom-label">
             Username
             <input
               type="text"
               name="username"
               required
               defaultValue={state.values?.username}
+              className="custom-input"
             />
             {renderError("username", 0)}
           </label>
         </div>
         <div>
-          <label>
+          <label className="custom-label">
             Name
             <input
               type="text"
               name="name"
               required
               defaultValue={state.values?.name}
+              className="custom-input"
             />
           </label>
         </div>
         <div>
-          <label>
+          <label className="custom-label">
             Password
             <input
               type="password"
               name="password"
               required
               defaultValue={state.values?.password}
+              className="custom-input"
             />
             {renderError("password", 1)}
           </label>
         </div>
         {renderError("userExist", 2)}
-        <button type="submit">Register</button>
+        <button type="submit" className="custom-button">
+          Register
+        </button>
       </form>
     </div>
   );

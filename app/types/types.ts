@@ -4,7 +4,7 @@ export interface Blog {
   author: string;
   url?: string;
   likes: number;
-  userId: number;
+  user_Id: number;
 }
 
 export type blogWithOutID = Omit<Blog, "id">;
