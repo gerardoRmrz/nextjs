@@ -10,6 +10,7 @@ export const createBlog = async (
   prevState: {
     errors: {};
     values: { title: string; author: string; url: string };
+    success: boolean;
   },
   formData: FormData,
 ) => {
@@ -37,7 +38,11 @@ export const createBlog = async (
   }
 
   if (Object.keys(errors).length > 0) {
-    return { errors: { ...errors }, values: { title, author, url } };
+    return {
+      errors: { ...errors },
+      values: { title, author, url },
+      success: false,
+    };
   }
 
   const newBlog = {
@@ -53,7 +58,7 @@ export const createBlog = async (
 
   revalidatePath("/blogs");
 
-  redirect("/blogs");
+  return { errors: "", values: { title, author, url }, success: true };
 };
 
 export const incrementBlogLikes = async (formData: FormData) => {
