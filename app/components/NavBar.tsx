@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import Button from "./Button";
+import LinkNavBar from "./LinkNavBar";
 
 const NavBar = () => {
   const { data: session } = useSession();
@@ -13,25 +15,25 @@ const NavBar = () => {
   }
 
   return (
-    <nav>
-      <Link href="/">Home</Link>
+    <nav className="bg-gray-800 text-white text-xl px-6 py-3 flex items-center gap-4">
+      <LinkNavBar href="/">Home</LinkNavBar>
       {" | "}
-      <Link href="/blogs">blogs</Link>
+      <LinkNavBar href="/blogs">blogs</LinkNavBar>
       {" | "}
-      <Link href="/users">users</Link>
+      <LinkNavBar href="/users">users</LinkNavBar>
       {" | "}
       {session ? (
         <>
-          <Link href="/blogs/new">create new</Link>
+          <LinkNavBar href="/blogs/new">create new</LinkNavBar>
           {" | "}
           <em>{session.user?.name} logged in </em>
-          <button onClick={() => signOut()}>logout</button>
+          <Button onClick={() => signOut()}>logout</Button>
         </>
       ) : (
         <>
-          <Link href="/login">login</Link>
+          <LinkNavBar href="/login">login</LinkNavBar>
           {" | "}
-          <Link href="/register">register</Link>
+          <LinkNavBar href="/register">register</LinkNavBar>
         </>
       )}
     </nav>
