@@ -17,7 +17,9 @@ export interface newBlog {
 }
 
 export type User = {
+  id: number;
   username: string;
   name: string;
   passwordHash: string;
+  token: string;
 };

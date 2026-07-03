@@ -6,7 +6,9 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "fillUsersTable": "tsx ./utils/fillUsersTable.ts",
+    "fillBlogsTable": "tsx ./utils/fillBlogsTable"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
@@ -30,6 +32,7 @@
     "eslint-config-next": "16.2.9",
     "postgres": "^3.4.9",
     "tailwindcss": "^4.3.1",
+    "tsx": "^4.22.4",
     "typescript": "^6.0.3"
   }
 }

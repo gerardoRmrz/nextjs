@@ -1,18 +1,11 @@
 "use client";
 
-import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import Button from "./Button";
 import LinkNavBar from "./LinkNavBar";
 
 const NavBar = () => {
   const { data: session } = useSession();
-
-  if (!session) {
-    console.log("NO SESSION!!!");
-  } else {
-    console.log("NAVBAR: =====>", session);
-  }
 
   return (
     <nav className="bg-gray-800 text-white text-xl px-6 py-3 flex items-center gap-4">
@@ -26,8 +19,10 @@ const NavBar = () => {
         <>
           <LinkNavBar href="/blogs/new">create new</LinkNavBar>
           {" | "}
+          <LinkNavBar href="/me">me</LinkNavBar>
+          {" | "}
           <em>{session.user?.name} logged in </em>
-          <Button onClick={() => signOut()}>logout</Button>
+          <Button onClick={() => signOut({ redirect: false })}>logout</Button>
         </>
       ) : (
         <>

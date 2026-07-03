@@ -40,7 +40,7 @@ async function fillBlogsTable() {
     author: blog.author,
     likes: blog.likes,
     url: blog.url || "",
-    userId: blog.userId,
+    user_Id: blog.userId,
   }));
 
   await db.insert(blogs).values(mappedBlogs);

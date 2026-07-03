@@ -1,3 +1,4 @@
+//run with:  npx tsx ./utils/fillUsersTable.ts
 import { config } from "dotenv";
 config({ path: ".env.local" });
 import { setPassword } from "./set-password";
@@ -58,6 +59,7 @@ async function fillUsersTable() {
     username: user.username,
     name: user.name,
     passwordHash: user.passwordHash,
+    token: "",
   }));
 
   await db.insert(users).values(mappedUsers);
