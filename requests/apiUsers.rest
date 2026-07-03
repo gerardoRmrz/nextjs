@@ -1,0 +1,3 @@
+GET http://localhost:3000/api/me 
+Content-Type: application/json
+Authorization: Bearer cd068f64-194b-4cef-b1e2-30bae72d7ece
