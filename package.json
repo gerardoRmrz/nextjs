@@ -7,8 +7,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "dropTables": "tsx ./utils/dropTables.ts",
+    "deleteHistory": "npx drizzle-kit drop",
+    "generateMigration": "npx drizzle-kit generate",
+    "migrateSchema": "npx drizzle-kit migrate",
     "fillUsersTable": "tsx ./utils/fillUsersTable.ts",
-    "fillBlogsTable": "tsx ./utils/fillBlogsTable"
+    "fillBlogsTable": "tsx ./utils/fillBlogsTable.ts",
+    "fillAllTables": "npm run dropTables && npm run generateMigration && npm run migrateSchema && npm run fillUsersTable && npm run fillBlogsTable"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.1.0",
@@ -17,6 +22,7 @@
     "drizzle-orm": "^0.45.2",
     "next": "^16.2.9",
     "next-auth": "5.0.0-beta.31",
+    "pg": "^8.22.0",
     "react": "19.2.7",
     "react-dom": "19.2.7"
   },

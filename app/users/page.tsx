@@ -1,5 +1,4 @@
 import { getUsers } from "../services/users";
-
 import UserItem from "../components/UserItem";
 
 const Users = async () => {

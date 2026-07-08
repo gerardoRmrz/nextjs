@@ -2,7 +2,11 @@
 
 import { auth } from "@/app/api/auth/auth";
 import { redirect } from "next/navigation";
-import { addNewBlog, incrementLikes } from "../services/blogs";
+import {
+  addNewBlog,
+  incrementLikes,
+  addBlogToReadingList,
+} from "../services/blogs";
 import { revalidatePath } from "next/cache";
 import { blogs } from "@/db/schema";
 
@@ -61,11 +65,45 @@ export const createBlog = async (
   return { errors: "", values: { title, author, url }, success: true };
 };
 
-export const incrementBlogLikes = async (formData: FormData) => {
-  const id = formData.get("id") as string;
-  incrementLikes(Number(id));
-  revalidatePath(`/blogs/${id}`);
-  revalidatePath(`/blogs`);
+export const incrementBlogLikes = async (
+  prevState: { error: string; success: boolean; executed: boolean },
+  formData: FormData,
+) => {
+  try {
+    const id = formData.get("id") as string;
+    incrementLikes(Number(id));
+    revalidatePath(`/blogs/${id}`);
+    revalidatePath(`/blogs`);
+    return {
+      error: "",
+      success: true,
+      executed: true,
+    };
+  } catch (error) {
+    return {
+      error: `Error: ${error}`,
+      success: false,
+      executed: true,
+    };
+  }
+};
+
+export const addReadingList = async (
+  prevState: { error: string; success: boolean; executed: boolean },
+  formData: FormData,
+) => {
+  try {
+    const id = formData.get("id") as string;
+    const session = await auth();
+
+    if (!session) {
+      throw new Error("Not logged in");
+    }
+    addBlogToReadingList(session.user?.email, Number(id));
+    return { error: "", success: true, executed: true };
+  } catch (error) {
+    return { error: `Error: ${error}`, success: false, executed: true };
+  }
 };
 
 export const searchResult = async (formData: FormData) => {

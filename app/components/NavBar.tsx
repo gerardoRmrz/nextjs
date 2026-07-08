@@ -22,7 +22,11 @@ const NavBar = () => {
           <LinkNavBar href="/me">me</LinkNavBar>
           {" | "}
           <em>{session.user?.name} logged in </em>
-          <Button onClick={() => signOut({ redirect: false })}>logout</Button>
+          <Button onClick={() => signOut({ redirectTo: "/", redirect: false })}>
+            {" "}
+            {/* CAMBIAR redirect: false a redirect:true ANTES DE SUBIR A GITHUB */}
+            logout
+          </Button>
         </>
       ) : (
         <>

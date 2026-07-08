@@ -1,21 +1,24 @@
-import { eq, sql } from "drizzle-orm";
-import { db } from "@/db";
-import { blogs } from "@/db/schema";
-
+import { eq, sql, and } from "drizzle-orm";
+import { db } from "../../db";
+import { users, blogs, readingLists } from "@/db/schema";
 import { getCurrentUser } from "./session";
 
 export const getBlogs = async (searchTerm: string | null) => {
   const allBlogs = await db.query.blogs.findMany();
-  /* if (searchTerm) {
+  if (searchTerm) {
     return allBlogs.filter((blog) => blog.title.includes(searchTerm));
-  } */
+  }
   return allBlogs;
 };
 
 export const getBlogsById = async (id: number) => {
-  return await db.query.blogs.findFirst({
-    where: eq(blogs.id, id),
-  });
+  const [result] = await db
+    .select()
+    .from(blogs)
+    .leftJoin(readingLists, eq(readingLists.blog_Id, blogs.id))
+    .where(eq(blogs.id, id));
+
+  return result;
 };
 
 type newBlogInfer = typeof blogs.$inferInsert;
@@ -27,12 +30,16 @@ export const addNewBlog = async (newBlog: newBlogInfer) => {
     throw new Error("Not logged in");
   }
 
-  await db.insert(blogs).values({
-    title: newBlog.title,
-    author: newBlog.author,
-    url: newBlog.url,
-    user_Id: user.id,
-  });
+  const [result] = await db
+    .insert(blogs)
+    .values({
+      title: newBlog.title,
+      author: newBlog.author,
+      url: newBlog.url,
+      user_Id: user.id,
+    })
+    .returning({ insertedId: blogs.id });
+  await addBlogToReadingList(user.username, result.insertedId);
 };
 
 export const incrementLikes = async (id: number) => {
@@ -42,4 +49,36 @@ export const incrementLikes = async (id: number) => {
     .where(eq(blogs.id, id));
 };
 
-export const handleChange = () => {};
+export const addBlogToReadingList = async (
+  username: string | null | undefined,
+  blogId: number,
+) => {
+  if (!username) {
+    throw new Error("Not logged in");
+  }
+  // find currentUser
+  const [userId] = await db
+    .select({ id: users.id })
+    .from(users)
+    .where(eq(users.username, username));
+
+  await db.insert(readingLists).values({
+    user_Id: userId.id,
+    blog_Id: blogId,
+    read: true,
+  });
+};
+
+export const getReadingList = async (id: number) => {
+  try {
+    const result = await db
+      .select()
+      .from(readingLists)
+      .leftJoin(blogs, eq(readingLists.blog_Id, blogs.id))
+      .where(eq(readingLists.user_Id, id));
+    return result;
+  } catch (error) {
+    console.error("Error: ", error);
+    throw error;
+  }
+};

@@ -26,6 +26,10 @@
   .custom-button {
     @apply bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded;
   }
+  .custom-green-button {
+    @apply bg-green-700 hover:bg-green-900 text-white font-bold py-2 px-4 rounded ml-3;
+  }
+
   .custom-input {
     @apply text-2xl my-2 mx-3 px-3 bg-gray-700 rounded-xl;
   }

@@ -6,7 +6,7 @@ import { db } from "../../db";
 import { users } from "../../db/schema";
 import { eq } from "drizzle-orm";
 
-export const generateToken = async (prevState: {
+export type TokenState = {
   errors: string;
   values: {
     user: {
@@ -15,14 +15,16 @@ export const generateToken = async (prevState: {
       token: string;
     };
   };
-}) => {
+};
+
+export const generateToken = async (prevState: TokenState) => {
   const user = await db.query.users.findFirst({
     where: eq(users.username, prevState.values.user.username),
   });
 
   if (!user) {
     return {
-      errors: "",
+      errors: "Error: Not authenticated",
       values: {
         user: {
           name: "",
@@ -33,16 +35,29 @@ export const generateToken = async (prevState: {
     };
   }
 
-  const uuid = crypto.randomUUID();
+  try {
+    const uuid = crypto.randomUUID();
 
-  await db.update(users).set({ token: uuid }).where(eq(users.id, user.id));
+    await db.update(users).set({ token: uuid }).where(eq(users.id, user.id));
 
-  return {
-    errors: "",
-    values: {
-      user: { ...prevState.values.user, token: uuid },
-    },
-  };
+    return {
+      errors: "",
+      values: {
+        user: { ...prevState.values.user, token: uuid },
+      },
+    };
+  } catch (error) {
+    return {
+      errors: `Error: ${error}`,
+      values: {
+        user: {
+          name: "",
+          username: "",
+          token: "",
+        },
+      },
+    };
+  }
 };
 
 export const registerUser = async (

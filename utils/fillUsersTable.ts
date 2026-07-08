@@ -48,12 +48,10 @@ const generateUsersList = async () => {
   ];
 };
 
-async function fillUsersTable() {
-  const { db } = await import("../db/");
+export async function fillUsersTable() {
+  const { db } = await import("@/db/");
   const { users } = await import("@/db/schema");
   const usersList = await generateUsersList();
-
-  console.log(usersList);
 
   const mappedUsers = usersList.map((user) => ({
     username: user.username,

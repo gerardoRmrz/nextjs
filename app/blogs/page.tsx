@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Search from "../ui/search";
 import { getBlogs } from "../services/blogs";
 

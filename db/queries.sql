@@ -1,1 +1,1 @@
-SELECT * from users LEFT JOIN blogs using(id);
+SELECT * from reading_lists;

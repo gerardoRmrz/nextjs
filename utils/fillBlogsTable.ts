@@ -31,8 +31,8 @@ const blogList = [
   },
 ];
 
-async function fillBlogsTable() {
-  const { db } = await import("../db/");
+export async function fillBlogsTable() {
+  const { db } = await import("@/db/");
   const { blogs } = await import("@/db/schema");
 
   const mappedBlogs = blogList.map((blog) => ({
