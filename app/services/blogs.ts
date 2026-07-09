@@ -65,7 +65,7 @@ export const addBlogToReadingList = async (
   await db.insert(readingLists).values({
     user_Id: userId.id,
     blog_Id: blogId,
-    read: true,
+    read: false,
   });
 };
 
@@ -80,5 +80,22 @@ export const getReadingList = async (id: number) => {
   } catch (error) {
     console.error("Error: ", error);
     throw error;
+  }
+};
+
+export const setReadBlog = async (currentUserId: number, blogId: number) => {
+  console.log("++++++++++++++++>> ", currentUserId, blogId);
+  try {
+    await db
+      .update(readingLists)
+      .set({ read: true })
+      .where(
+        and(
+          eq(readingLists.blog_Id, blogId),
+          eq(readingLists.user_Id, currentUserId),
+        ),
+      );
+  } catch (error) {
+    console.log(`Error: ${error}`);
   }
 };

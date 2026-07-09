@@ -6,9 +6,11 @@ import {
   addNewBlog,
   incrementLikes,
   addBlogToReadingList,
+  setReadBlog,
 } from "../services/blogs";
 import { revalidatePath } from "next/cache";
-import { blogs } from "@/db/schema";
+import { blogs, readingLists } from "@/db/schema";
+import { db } from "@/db";
 
 export const createBlog = async (
   prevState: {
@@ -104,6 +106,14 @@ export const addReadingList = async (
   } catch (error) {
     return { error: `Error: ${error}`, success: false, executed: true };
   }
+};
+
+export const markAsRead = async (formData: FormData) => {
+  const blogId = formData.get("blogId") as string;
+  const currentUserId = formData.get("UserId") as string;
+
+  await setReadBlog(Number(currentUserId), Number(blogId));
+  revalidatePath("/me");
 };
 
 export const searchResult = async (formData: FormData) => {

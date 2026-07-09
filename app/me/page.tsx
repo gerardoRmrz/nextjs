@@ -11,13 +11,12 @@ const PersonalPage = async () => {
   if (!user) {
     return null;
   }
-
   return (
     <div className="flex justify-center">
       <div className="flex flex-col items-start w-2/3 bg-gray-900 pl-5 pr-5 pb-10">
         <MyData currentUser={user} />
         <hr className="bg-white h-0.5 min-w-full" />
-        <ReadingList currentUser={user} />
+        <ReadingList currentUserId={user.id} />
         <hr className="bg-white h-0.5 min-w-full" />
         <ApiToken />
       </div>
