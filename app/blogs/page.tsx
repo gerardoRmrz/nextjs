@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import Search from "../ui/search";
 import { getBlogs } from "../services/blogs";
 
@@ -16,11 +17,13 @@ const Blogs = async ({
     <div>
       <h2 className="text-4xl">blogs</h2>
       <Search />
-      <ul>
-        {blogs.map((blog) => (
-          <BlogItem blog={blog} key={blog.id} />
-        ))}
-      </ul>
+      <Suspense fallback={<p>Loading blogs...</p>}>
+        <ul>
+          {blogs.map((blog) => (
+            <BlogItem blog={blog} key={blog.id} />
+          ))}
+        </ul>
+      </Suspense>
     </div>
   );
 };

@@ -16,7 +16,11 @@
     "fillAllTables": "npm run dropTables && npm run generateMigration && npm run migrateSchema && npm run fillUsersTable && npm run fillBlogsTable"
   },
   "dependencies": {
+    "@mdx-js/loader": "^3.1.1",
+    "@mdx-js/react": "^3.1.1",
     "@neondatabase/serverless": "^1.1.0",
+    "@next/mdx": "^16.2.10",
+    "@types/mdx": "^2.0.14",
     "approve-builds": "^1.0.0",
     "bcryptjs": "^3.0.3",
     "drizzle-orm": "^0.45.2",
@@ -27,6 +31,7 @@
     "react-dom": "19.2.7"
   },
   "devDependencies": {
+    "@eslint/markdown": "^8.0.3",
     "@tailwindcss/postcss": "^4.3.1",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^26.0.1",
