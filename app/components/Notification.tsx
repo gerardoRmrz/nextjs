@@ -8,8 +8,22 @@ export default function Notification() {
   if (!message) return null;
 
   if (type === "success") {
-    return <div className="notification notification-success">{message}</div>;
+    return (
+      <div
+        className="notification notification-success"
+        data-testId="notification"
+      >
+        {message}
+      </div>
+    );
   } else {
-    return <div className="notification notification-fail">{message}</div>;
+    return (
+      <div
+        className="notification notification-fail"
+        data-testId="notification"
+      >
+        {message}
+      </div>
+    );
   }
 }

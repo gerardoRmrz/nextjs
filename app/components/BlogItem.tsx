@@ -11,7 +11,7 @@ const BlogItem = ({ blog }: { blog: Blog }) => {
           <Link href={`/blogs/${blog.id}`} className="list-item">
             {blog.title}
           </Link>
-          <p>Likes: {blog.likes}</p>
+          <p>{blog.likes} likes</p>
         </div>
       </li>
     </>

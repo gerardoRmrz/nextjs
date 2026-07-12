@@ -10,10 +10,12 @@ export default function Search() {
           placeholder="search"
           defaultValue=""
           className="text-2xl my-2 mx-3 px-3 bg-gray-700 rounded-xl"
+          data-testId="filter-input"
         />
         <button
           type="submit"
           className="bg-blue-900 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-2xl"
+          data-testId="search-button"
         >
           Search
         </button>

@@ -1,7 +1,9 @@
+"use server";
 import { eq, sql, and } from "drizzle-orm";
 import { db } from "../../db";
 import { users, blogs, readingLists } from "@/db/schema";
 import { getCurrentUser } from "./session";
+import { revalidatePath } from "next/cache";
 
 export const getBlogs = async (searchTerm: string | null) => {
   const allBlogs = await db.query.blogs.findMany();
@@ -95,6 +97,7 @@ export const setReadBlog = async (currentUserId: number, blogId: number) => {
           eq(readingLists.user_Id, currentUserId),
         ),
       );
+    revalidatePath("/me");
   } catch (error) {
     console.log(`Error: ${error}`);
   }

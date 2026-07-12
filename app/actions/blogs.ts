@@ -101,7 +101,9 @@ export const addReadingList = async (
     if (!session) {
       throw new Error("Not logged in");
     }
+
     addBlogToReadingList(session.user?.email, Number(id));
+    revalidatePath(`/me`);
     return { error: "", success: true, executed: true };
   } catch (error) {
     return { error: `Error: ${error}`, success: false, executed: true };

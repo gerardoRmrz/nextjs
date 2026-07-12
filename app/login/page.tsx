@@ -3,10 +3,12 @@
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { useNotification } from "@/app/components/NotificationContext";
 
 export default function LoginPage() {
   const router = useRouter();
   const [error, setError] = useState("");
+  const { showNotification } = useNotification();
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -21,6 +23,7 @@ export default function LoginPage() {
     if (result?.error) {
       setError("Invalid username or password");
     } else {
+      showNotification("login succeeded");
       router.push("/");
       router.refresh();
     }
@@ -29,7 +32,11 @@ export default function LoginPage() {
   return (
     <div className="flex flex-col items-center my-20">
       <h2 className="text-3xl">Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && (
+        <p style={{ color: "red" }} data-testId="error-message">
+          {error}
+        </p>
+      )}
       <form onSubmit={handleSubmit} className="flex flex-col items-center">
         <div>
           <label className="custom-label">
@@ -53,7 +60,11 @@ export default function LoginPage() {
             />
           </label>
         </div>
-        <button type="submit" className="custom-button text-2xl">
+        <button
+          type="submit"
+          className="custom-button text-2xl"
+          data-testid="login-button"
+        >
           Login
         </button>
       </form>

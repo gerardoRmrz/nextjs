@@ -4,13 +4,14 @@ import MyData from "./MyData";
 import ReadingList from "./ReadingList";
 import ApiToken from "./ApiToken";
 import { Suspense } from "react";
+import { redirect } from "next/navigation";
 
 const PersonalPage = async () => {
   //
   const user = await getCurrentUser();
 
   if (!user) {
-    return null;
+    redirect("/login");
   }
   return (
     <div className="flex justify-center">

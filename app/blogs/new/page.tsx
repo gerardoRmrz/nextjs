@@ -36,7 +36,9 @@ const NewBlog = () => {
       <h2 className="text-2xl">Create a new blog</h2>
       <form action={formAction} className="flex flex-col items-center my-3">
         <div>
-          <label className="custom-label">Title</label>
+          <label className="custom-label" htmlFor="title">
+            Title
+          </label>
           <input
             id="title"
             name="title"
@@ -47,9 +49,12 @@ const NewBlog = () => {
           {renderError("title", 0)}
         </div>
         <div>
-          <label className="custom-label">Author</label>
+          <label className="custom-label" htmlFor="author">
+            Author
+          </label>
           <input
             type="text"
+            id="author"
             name="author"
             defaultValue={state.values?.author}
             className="custom-input"
@@ -57,16 +62,23 @@ const NewBlog = () => {
           {renderError("author", 1)}
         </div>
         <div>
-          <label className="custom-label">URL</label>
+          <label className="custom-label" htmlFor="url">
+            URL
+          </label>
           <input
             type="text"
+            id="url"
             name="url"
             defaultValue={state.values?.url}
             className="custom-input"
           ></input>
           {renderError("url", 2)}
         </div>
-        <button type="submit" className="custom-button">
+        <button
+          type="submit"
+          className="custom-button"
+          data-testId="create-blog-button"
+        >
           Create
         </button>
       </form>

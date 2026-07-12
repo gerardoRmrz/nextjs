@@ -13,7 +13,9 @@
     "migrateSchema": "npx drizzle-kit migrate",
     "fillUsersTable": "tsx ./utils/fillUsersTable.ts",
     "fillBlogsTable": "tsx ./utils/fillBlogsTable.ts",
-    "fillAllTables": "npm run dropTables && npm run generateMigration && npm run migrateSchema && npm run fillUsersTable && npm run fillBlogsTable"
+    "fillAllTables": "npm run dropTables && npm run generateMigration && npm run migrateSchema && npm run fillUsersTable && npm run fillBlogsTable",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@mdx-js/loader": "^3.1.1",
@@ -32,6 +34,7 @@
   },
   "devDependencies": {
     "@eslint/markdown": "^8.0.3",
+    "@playwright/test": "^1.61.1",
     "@tailwindcss/postcss": "^4.3.1",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^26.0.1",

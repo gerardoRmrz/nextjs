@@ -63,16 +63,28 @@ export const generateToken = async (prevState: TokenState) => {
 export const registerUser = async (
   prevState: {
     errors: {};
-    values: { username: string; name: string; password: string };
+    values: {
+      username: string;
+      name: string;
+      password: string;
+      confirmPassword: string;
+    };
   },
   formData: FormData,
 ) => {
   const name = (formData.get("name") as string)?.trim();
   const username = (formData.get("username") as string)?.trim();
   const password = formData.get("password") as string;
+  const confirmPassword = formData.get("confirmPassword") as string;
+
   const token = "";
 
   const errors = {};
+
+  if (password !== confirmPassword) {
+    (errors as any).confirmPassword =
+      "The password an confirm password must be the same";
+  }
 
   if (!username || username.length < 4) {
     (errors as any).username =
@@ -93,7 +105,10 @@ export const registerUser = async (
   }
 
   if (Object.keys(errors).length > 0) {
-    return { errors: { ...errors }, values: { username, name, password } };
+    return {
+      errors: { ...errors },
+      values: { username, name, password, confirmPassword },
+    };
   }
 
   const passwordHash = await bcrypt.hash(password, 10);

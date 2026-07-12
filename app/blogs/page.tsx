@@ -18,7 +18,7 @@ const Blogs = async ({
       <h2 className="text-4xl">blogs</h2>
       <Search />
       <Suspense fallback={<p>Loading blogs...</p>}>
-        <ul>
+        <ul data-testId="blogs-list">
           {blogs.map((blog) => (
             <BlogItem blog={blog} key={blog.id} />
           ))}

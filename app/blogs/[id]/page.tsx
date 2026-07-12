@@ -14,9 +14,14 @@ const BlogById = async ({ params }: { params: Promise<{ id: string }> }) => {
   const isInReadingList =
     reading_lists?.read && reading_lists?.user_Id === currentUser?.id;
   return (
-    <div className="bg-gray-700 flex flex-col items-center justify-around my-4 h-80">
-      <h2 className="text-3xl text-center">{blog.title}</h2>
-      <p className="text-2xl">
+    <div
+      className="bg-gray-700 flex flex-col items-center justify-around my-4 h-80"
+      data-testId="blog-detail"
+    >
+      <h2 className="text-3xl text-center" data-testId="blog-title">
+        {blog.title}
+      </h2>
+      <p className="text-2xl" data-testId="blog-author">
         <strong>{blog.author}</strong>
       </p>
       <LinkNavBar href={blog.url}>

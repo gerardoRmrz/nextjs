@@ -51,6 +51,7 @@ const LikesAndReadingListForm = ({
               type="submit"
               formAction={addReadingListAction}
               className="custom-green-button"
+              data-testID="add-to-reading-list-button"
             >
               add to reading list
             </button>

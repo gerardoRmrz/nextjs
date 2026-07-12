@@ -1,41 +1,31 @@
 import { getReadingList } from "../services/blogs";
-import { markAsRead } from "../actions/blogs";
-import Link from "next/link";
+
+import ReadedBlogs from "./ReadedBlogs";
+import UnreadBlogs from "./UnreadBlogs";
 
 const ReadingList = async ({ currentUserId }: { currentUserId: number }) => {
-  console.log("//////////////////>> ", currentUserId);
   const readingList = await getReadingList(currentUserId);
-  const unreadList = readingList.filter((blog) => !blog.reading_lists.read);
-  const readList = readingList.filter((blog) => blog.reading_lists.read);
-
-  const renderList = (blogsList: typeof readingList, markButton: boolean) => (
-    <ul>
-      {blogsList.map((item) => (
-        <li key={item.reading_lists?.id} className="flex justify-between mb-3">
-          <Link href={`/blogs/${item.blogs?.id}`} className="list-item">
-            {item.blogs?.title}
-          </Link>
-          {markButton ? (
-            <form action={markAsRead}>
-              <input type="hidden" value={item.blogs?.id} name="blogId"></input>
-              <input type="hidden" value={currentUserId} name="UserId"></input>
-              <button type="submit" className="custom-green-button">
-                mark as read
-              </button>
-            </form>
-          ) : null}
-        </li>
-      ))}
-    </ul>
-  );
-
+  const unreadList = readingList
+    .filter((item) => !item.reading_lists.read)
+    .map((item) => item.blogs);
+  const readList = readingList
+    .filter((item) => item.reading_lists.read)
+    .map((item) => item.blogs);
+  console.log("readList ++++++>", { ...readList });
   return (
-    <div>
-      <h2 className="text-2xl  my-6">Reading List</h2>
+    <div data-testId="reading-list-section">
+      <h2 className="text-2xl  my-6" data-testId="empty-reading-list">
+        Reading List
+      </h2>
       <h3 className="mb-5">Unread ({unreadList.length})</h3>
-      {renderList(unreadList, true)}
+      <section data-testId="unread-section">
+        <UnreadBlogs
+          blogList={unreadList}
+          currentUserId={currentUserId}
+        ></UnreadBlogs>
+      </section>
       <h3 className="mb-5">Read ({readList.length})</h3>
-      {renderList(readList, false)}
+      <ReadedBlogs blogList={readList}></ReadedBlogs>
     </div>
   );
 };

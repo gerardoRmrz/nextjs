@@ -10,15 +10,17 @@ export default function RegisterPage() {
       name: "",
       username: "",
       password: "",
+      confirmPassword: "",
     },
   };
 
   const [state, formAction] = useActionState(registerUser, initialState);
 
-  const renderError = (key: string, indx: number) => {
+  console.log("+++++++++++++++>>> ", Object.keys(state.errors));
+  const renderError = (key: string, indx: number, testId: string) => {
     if (Object.keys(state.errors).includes(key)) {
       return (
-        <p style={{ color: "red" }}>
+        <p style={{ color: "red" }} data-testid={testId}>
           {Object.values(state.errors)[indx] as string}
         </p>
       );
@@ -28,20 +30,7 @@ export default function RegisterPage() {
   return (
     <div className="flex flex-col items-center my-20">
       <h2 className="text-3xl">Register</h2>
-      <form action={formAction} className="flex flex-col items-center">
-        <div>
-          <label className="custom-label">
-            Username
-            <input
-              type="text"
-              name="username"
-              required
-              defaultValue={state.values?.username}
-              className="custom-input"
-            />
-            {renderError("username", 0)}
-          </label>
-        </div>
+      <form action={formAction} className="flex flex-col">
         <div>
           <label className="custom-label">
             Name
@@ -56,6 +45,19 @@ export default function RegisterPage() {
         </div>
         <div>
           <label className="custom-label">
+            Username
+            <input
+              type="text"
+              name="username"
+              required
+              defaultValue={state.values?.username}
+              className="custom-input"
+            />
+            {renderError("username", 0, "username-error")}
+          </label>
+        </div>
+        <div>
+          <label className="custom-label">
             Password
             <input
               type="password"
@@ -64,11 +66,28 @@ export default function RegisterPage() {
               defaultValue={state.values?.password}
               className="custom-input"
             />
-            {renderError("password", 1)}
+            {renderError("password", 1, "")}
           </label>
         </div>
-        {renderError("userExist", 2)}
-        <button type="submit" className="custom-button">
+        <div>
+          <label className="custom-label">
+            Confirm Password
+            <input
+              type="password"
+              name="confirmPassword"
+              required
+              defaultValue={state.values?.confirmPassword}
+              className="custom-input"
+            />
+            {renderError("confirmPassword", 0, "passwordConfirm-error")}
+          </label>
+        </div>
+        {renderError("userExist", 2, "error-message")}
+        <button
+          type="submit"
+          className="custom-button"
+          data-testid="register-button"
+        >
           Register
         </button>
       </form>
