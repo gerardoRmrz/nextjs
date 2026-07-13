@@ -61,6 +61,7 @@ jobs:
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
 
       - name: Run Playwright tests
+        timeout-minutes: 60
         run: npx playwright test
 
       - uses: actions/upload-artifact@v4
