@@ -1,6 +1,8 @@
 import { Page } from "@playwright/test";
 
-const baseUrl = "http://localhost:3000";
+const baseUrl = "https://nextjs-fs-blogs.vercel.app/";
+
+//const baseUrl = "http://localhost:3000";
 
 export const resetDatabase = async () => {
   const response = await fetch(`${baseUrl}/api/testing/reset`, {
