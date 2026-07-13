@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { getCurrentUser } from "../services/session";
 
 import MyData from "./MyData";
