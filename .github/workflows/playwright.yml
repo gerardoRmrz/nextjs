@@ -61,7 +61,6 @@ jobs:
         run: npx drizzle-kit push
         env:
           DB_DEBUG: true
-          ACTIONS_STEP_DEBUG: true
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
           NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
