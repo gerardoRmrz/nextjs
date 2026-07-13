@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { getUsers } from "../services/users";
 import UserItem from "../components/UserItem";
 import { Suspense } from "react";
