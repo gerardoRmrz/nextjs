@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { Suspense } from "react";
 import Search from "../ui/search";
 import { getBlogs } from "../services/blogs";
