@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import { notFound } from "next/navigation";
 import { getBlogsById } from "@/app/services/blogs";
 import { getCurrentUser } from "@/app/services/session";
@@ -5,9 +6,10 @@ import LinkNavBar from "@/app/components/LinkNavBar";
 import LikesAndReadingListForm from "./LikesAndReadingListForm";
 
 const BlogById = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const currentUser = await getCurrentUser();
   const { id } = await params;
+  const currentUser = await getCurrentUser();
   const { blogs: blog, reading_lists } = await getBlogsById(Number(id));
+
   if (!blog) {
     notFound();
   }
